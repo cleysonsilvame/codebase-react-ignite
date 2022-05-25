@@ -5,12 +5,13 @@ import { signIn, signOut , useSession } from "next-auth/react";
 import styles from "./styles.module.scss";
 
 export function SignInButton() {
-  const { status, data }= useSession();
+  const { data: session }= useSession();
 
-  return status === 'authenticated' ? (
+
+  return session ? (
     <button type="button" className={styles.signInButton}>
       <FaGithub color="#04d361" />
-      {data.user.name}
+      {session.user.name}
       <FiX color="#737380" onClick={() => signOut()}/>
     </button>
   ) : (
