@@ -1,0 +1,36 @@
+{
+  "id": "d72e74b6-7dac-4509-8e34-d9188416c6c5",
+  "uid": "doloribus-omnis-iusto",
+  "type": "post",
+  "data": {
+    "title": [
+      {
+        "type": "heading1",
+        "text": "Morph out-of-the-box bandwidth",
+        "spans": []
+      }
+    ],
+    "content": [
+      {
+        "type": "heading1",
+        "text": "Empower vertical niches",
+        "spans": []
+      },
+      {
+        "type": "image",
+        "dimensions": {
+          "width": 900,
+          "height": 500
+        },
+        "alt": "Placeholder image",
+        "copyright": null,
+        "url": "https://images.unsplash.com/photo-1531771686035-25f47595c87a?w=900&h=500&fit=crop"
+      },
+      {
+        "type": "paragraph",
+        "text": "Enim dolor pariatur veniam consequat reprehenderit. Dolore eu excepteur eiusmod cillum esse reprehenderit eiusmod nostrud aliqua cupidatat ut magna anim non nostrud.",
+        "spans": []
+      }
+    ]
+  }
+}
