@@ -15,7 +15,8 @@ interface SignInCredentials {
 }
 
 interface AuthContextData {
-  signIn(credentials: SignInCredentials): Promise<void>;
+  signIn: (credentials: SignInCredentials) => Promise<void>;
+  signOut: () => void;
   isAuthenticated: boolean;
   user: User;
 }
@@ -24,11 +25,15 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-export function signOut() {
+let authChannel: BroadcastChannel;
+
+export function signOut(withAuthChannel: boolean = true) {
   destroyCookie(null, "nextauth.token");
   destroyCookie(null, "nextauth.refreshToken");
 
-  Router.push("/ ");
+  withAuthChannel && authChannel.postMessage("signOut");
+
+  Router.push("/");
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -79,15 +84,30 @@ export function AuthProvider({ children }: AuthProviderProps) {
             roles: data.roles,
           });
         })
-        .catch(error => {
-          signOut()
+        .catch(() => {
+          signOut();
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    authChannel = new BroadcastChannel("nextauth");
+
+    authChannel.onmessage = message => {
+      switch (message.data) {
+        case "signOut":
+          signOut(false);
+          authChannel.close();
+          break;
+        default:
+          break;
+      }
+    };
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, user }}>
+    <AuthContext.Provider value={{ isAuthenticated, signIn, user, signOut }}>
       {children}
     </AuthContext.Provider>
   );
